@@ -52,6 +52,11 @@ const GameSchema = new mongoose.Schema(
     likesLength: {
       type: Number,
     },
+    //Added a created by to add a relation to the user schema in order to be able to display who created the game entry.
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    }
   },
   { timestamps: true }
 );
