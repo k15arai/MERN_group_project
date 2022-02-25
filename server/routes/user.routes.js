@@ -1,8 +1,9 @@
-const UserController = require('../controllers/user.controller');
+const UserController = require("../controllers/user.controller");
 
-module.exports = (app)=>{
-    app.post('/api/users/register', UserController.register);
-    app.post('/api/users/login', UserController.login);
-    app.post('/api/users/logout', UserController.logout);
-    app.get('/api/users/:id', UserController.getOneUser);
-}
+module.exports = (app) => {
+  app.post("/api/user/register", UserController.register);
+  app.post("/api/user/login", UserController.login);
+  app.post("/api/user/logout", UserController.logout);
+  app.get("/api/user/:id", UserController.getOneUser);
+  app.delete("/api/user/delete/:id", UserController.deleteOneUser);
+};
