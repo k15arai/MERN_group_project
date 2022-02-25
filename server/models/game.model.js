@@ -53,13 +53,28 @@ const GameSchema = new mongoose.Schema(
       type: Number,
     },
     //Added a created by to add a relation to the user schema in order to be able to display who created the game entry.
-    createdBy: {
+    user_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
-    }
+      ref: "User",
+    },
   },
   { timestamps: true }
 );
+
+GameSchema.pre("deleteOne", function (next) {
+  const gameId = this.getQuery()["_id"];
+  mongoose
+    .model("Comment")
+    .deleteMany({ game: gameId }, function (err, result) {
+      if (err) {
+        console.log(`[error] ${err}`);
+        next(err);
+      } else {
+        console.log("success - deleting comments");
+        next();
+      }
+    });
+});
 
 // collection names are all lowercase and plural - based on the string 'Game'
 module.exports = mongoose.model("Game", GameSchema);
