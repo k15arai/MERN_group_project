@@ -50,7 +50,7 @@ function App() {
           <NotFound default />
           <AllGames path="/games" />
           <NewGame path="/games/new" />  
-          <OneGame path="/game/:id" />
+          <OneGame path="/games/:id" />
           <EditGame path="/game/edit/:id" />
           <Profile path="/user/profile/:username" />
         </Router>
