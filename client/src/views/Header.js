@@ -84,7 +84,7 @@ const Header = () => {
                 color='inherit'
                 size='small'
                 variant='outlined'
-                onClick={() => navigate("/games")}
+                onClick={() => navigate("/home")}
             >
                 See All Games
             </Button>
