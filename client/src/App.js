@@ -48,8 +48,8 @@ function App() {
         <Router>
           <LogReg path="/" />
           <NotFound default />
-          <AllGames path="/home" />
-          <NewGame path="/new" />
+          <AllGames path="/games" />
+          <NewGame path="/games/new" />  
           <OneGame path="/game/:id" />
           <EditGame path="/game/edit/:id" />
           <Profile path="/user/profile/:username" />
