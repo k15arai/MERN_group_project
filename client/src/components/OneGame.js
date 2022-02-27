@@ -4,7 +4,7 @@ import { navigate } from "@reach/router";
 
 /////////Material UI Links/////////
 import { styled } from "@mui/material/styles";
-import { Typography, Paper, Grid, TextField } from "@material-ui/core"; //Button link removed
+import { Typography, Paper, Grid } from "@material-ui/core"; //Button link removed
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import NotInterestedIcon from "@mui/icons-material/NotInterested";
@@ -121,16 +121,20 @@ const OneGame = (props) => {
     }
   };
 
+  const updateComment = (e) => {
+    e.preventDefault();
+    setCommentText(e.target.value);
+  };
+
   ///////////////////////////////////////////////////////////////////////////
 
   return (
-    <div>
+    <div key={id}>
       {/* {errs ? <></> : null} */}
       <Grid container spacing={2}>
         <Grid item xs={6}>
+          <img src={game.pictureUrl} alt={game.gameDescription} />
           <Item>
-            <img src={game.pictureUrl} alt={game.gameDescription} />
-            {/* <div className='center'> */}
             <Paper>
               <Typography
                 sx={{ fontSize: 14 }}
@@ -168,7 +172,7 @@ const OneGame = (props) => {
           </Item>
         </Grid>
         <Grid item xs={6}>
-          <Item>
+          <div className='center'>
             <Paper>
               {game.likes ? (
                 <>
@@ -225,10 +229,11 @@ const OneGame = (props) => {
                       ADD COMMENT
                     </Typography>
                     <textarea
-                      name='commentArea'
-                      id='commentArea'
+                      name=''
+                      id=''
                       value={commentText}
-                      onChange={(e) => setCommentText(e.target.value)}
+                      // onChange=e{(e) => setCommentText(e.target.value)}
+                      onChange={(e) => updateComment(e)}
                       cols='30'
                       rows='4'
                     ></textarea>
@@ -266,7 +271,7 @@ const OneGame = (props) => {
                 </>
               ) : null}
             </Paper>
-          </Item>
+          </div>
         </Grid>
       </Grid>
       <div>

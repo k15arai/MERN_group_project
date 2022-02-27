@@ -15,74 +15,73 @@ import Tooltip from "@mui/material/Tooltip";
 ///////////////////////////////////////////////////////////////////////////
 const AllGames = (props) => {
   // Array of objects for get all
-    const [displayGames, setDisplayGames] = useState([]);
-    const [allGames, setAllGames] = useState([]);
-    const [platformFilter, setPlatformFilter] = useState("");
-    const [userId, setUserId] = useState("");
+  const [displayGames, setDisplayGames] = useState([]);
+  const [allGames, setAllGames] = useState([]);
+  const [platformFilter, setPlatformFilter] = useState("");
+  const [userId, setUserId] = useState("");
 
-    useEffect(() => {
+  useEffect(() => {
     axios
-        .get("http://localhost:8000/api/games")
-        .then((allReturnedGames) => {
+      .get("http://localhost:8000/api/games")
+      .then((allReturnedGames) => {
         console.log(allReturnedGames.data);
         setDisplayGames(allReturnedGames.data);
         setAllGames(allReturnedGames.data);
-        })
-        .catch((err) => {
+      })
+      .catch((err) => {
         console.log(err);
-        });
-    }, []);
+      });
+  }, []);
 
-    useEffect(() => {
+  useEffect(() => {
     setUserId(localStorage.getItem("userId"));
-    }, []);
+  }, []);
 
   // Filter games on All Games page
-    const filterGameListHandler = (event, platformFilter) => {
+  const filterGameListHandler = (event, platformFilter) => {
     event.preventDefault();
     console.log(platformFilter);
     if (platformFilter === "All") {
-        setDisplayGames(allGames);
+      setDisplayGames(allGames);
     } else {
       // filter out to remove from the DOM
-        const filteredGamesArray = allGames.filter(
+      const filteredGamesArray = allGames.filter(
         (game) => game.gamePlatform === platformFilter
-        );
-        setDisplayGames(filteredGamesArray);
+      );
+      setDisplayGames(filteredGamesArray);
     }
-    };
+  };
 
-    const deleteGameHandler = (gameId) => {
+  const deleteGameHandler = (gameId) => {
     axios
-        .delete("http://localhost:8000/api/games/" + gameId, {
+      .delete("http://localhost:8000/api/games/" + gameId, {
         // this will force the sending of the credentials / cookies so they can be updated
         // XMLHttpRequest from a different domain cannot set cookie values for their own domain
         // unless withCredentials is set to 'true' before making the request
         withCredentials: true,
-        })
-        .then((res) => {
+      })
+      .then((res) => {
         const deletedGame = res.data;
         console.log(deletedGame);
         // filter out to remove from the DOM
         const filteredGamesArray = displayGames.filter(
-            (game) => game._id !== gameId
+          (game) => game._id !== gameId
         );
         setDisplayGames(filteredGamesArray);
         setAllGames(filteredGamesArray);
-        })
-        .catch((err) => {
+      })
+      .catch((err) => {
         console.log(err);
-        });
-    };
-///////////////////////////////////////////////////////////////////////////
+      });
+  };
+  ///////////////////////////////////////////////////////////////////////////
 
-
-    return (
+  return (
     <div>
-        <Typography variant='h5' color='textPrimary'>
+      <Typography variant='h5' color='textPrimary'>
         All Games
-        </Typography>
-        <div className='center'>
+      </Typography>
+      <div className='center'>
         {userId ? (
           // <Button
           //   variant='outlined'
@@ -91,28 +90,28 @@ const AllGames = (props) => {
           // >
           //   Create New Game
           // </Button>
-            <Tooltip title='Add a new Game'>
+          <Tooltip title='Add a new Game'>
             <IconButton type='submit'>
-                <AddBoxIcon
+              <AddBoxIcon
                 fontSize='large'
                 color='primary'
                 onClick={() => navigate("/games/new")}
-                />
+              />
             </IconButton>
-            </Tooltip>
+          </Tooltip>
         ) : null}
-        </div>
-        <div key='platformFilter-area' id='platformFilter-area'>
+      </div>
+      <div key='platformFilter-area' id='platformFilter-area'>
         <form onSubmit={(e) => filterGameListHandler(e, platformFilter)}>
-            <label>
+          <label>
             <strong>Platform:</strong> Where do you play?
-            </label>
-            <select
+          </label>
+          <select
             value={platformFilter}
             onChange={(e) => setPlatformFilter(e.target.value)}
-            >
+          >
             <option value='All' default>
-                ALL
+              ALL
             </option>
             <option value='PC'>PC</option>
             <option value='Xbox'>Xbox</option>
@@ -120,68 +119,68 @@ const AllGames = (props) => {
             <option value='Nintendo'>Nintendo</option>
             <option value='Steam'>Steam</option>
             <option value='Other'>Other</option>
-            </select>
-            {/* <Button type='submit' variant='outlined'>
+          </select>
+          {/* <Button type='submit' variant='outlined'>
             Filter
           </Button> */}
-            <Tooltip title='Filter List'>
+          <Tooltip title='Filter List'>
             <IconButton type='submit'>
-                <FilterAltIcon fontSize='large' color='primary' />
+              <FilterAltIcon fontSize='large' color='primary' />
             </IconButton>
-            </Tooltip>
+          </Tooltip>
         </form>
+      </div>
+      {displayGames.map((game, index) => (
+        <div key={displayGames._id}>
+          <hr />
+          <Grid container>
+            <Grid item xs={5}>
+              <img src={game.pictureUrl} alt={game.description} />
+            </Grid>
+            <Grid item xs={7}>
+              <GameCard game={game} userId={userId} />
+              {userId && game.user_id._id.toString() === userId.toString() ? (
+                <Tooltip title='Edit Game'>
+                  <IconButton>
+                    <EditIcon
+                      color='primary'
+                      onClick={() => navigate(`/games/${game._id}/edit`)}
+                    />
+                  </IconButton>
+                </Tooltip>
+              ) : // <Button
+              //   size='small'
+              //   variant='outlined'
+              //   color='inherit'
+              //   onClick={() => navigate(`/games/${game._id}/edit`)}
+              // >
+              //   Edit Game
+              // </Button>
+              null}
+              {userId && game.user_id._id.toString() === userId.toString() ? (
+                <Tooltip title='Delete Game'>
+                  <IconButton>
+                    <DeleteIcon
+                      color='secondary'
+                      onClick={() => deleteGameHandler(game._id)}
+                    />
+                  </IconButton>
+                </Tooltip>
+              ) : // <Button
+              //   size='small'
+              //   variant='outlined'
+              //   color='inherit'
+              //   onClick={() => deleteGameHandler(game._id)}
+              // >
+              //   Delete Game
+              // </Button>
+              null}
+            </Grid>
+          </Grid>
         </div>
-            {displayGames.map((game, index) => (
-            <div key={displayGames._id}>
-                <hr />
-                <Grid container>
-                <Grid item xs={5}>
-                    <img src={game.pictureUrl} alt={game.description} />
-                </Grid>
-                <Grid item xs={7}>
-                    <GameCard game={game} userId={userId} />
-                    {userId && game.user_id._id.toString() === userId.toString() ? (
-                    <Tooltip title='Edit Game'>
-                        <IconButton>
-                        <EditIcon
-                            color='primary'
-                            onClick={() => navigate(`/games/${game._id}/edit`)}
-                        />
-                        </IconButton>
-                    </Tooltip>
-                ) : // <Button
-                //   size='small'
-                //   variant='outlined'
-                //   color='inherit'
-                //   onClick={() => navigate(`/games/${game._id}/edit`)}
-                // >
-                //   Edit Game
-                // </Button>
-                    null}
-                    {userId && game.user_id._id.toString() === userId.toString() ? (
-                    <Tooltip title='Delete Game'>
-                        <IconButton>
-                        <DeleteIcon
-                            color='secondary'
-                            onClick={() => deleteGameHandler(game._id)}
-                        />
-                        </IconButton>
-                    </Tooltip>
-                ) : // <Button
-                //   size='small'
-                //   variant='outlined'
-                //   color='inherit'
-                //   onClick={() => deleteGameHandler(game._id)}
-                // >
-                //   Delete Game
-                // </Button>
-                    null}
-                </Grid>
-                </Grid>
-            </div>
-            ))}
+      ))}
     </div>
-    );
+  );
 };
 
 export default AllGames;
