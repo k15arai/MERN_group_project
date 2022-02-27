@@ -7,7 +7,7 @@ import AllGames from './components/AllGames'
 import OneGame from './components/OneGame'
 import EditGame from './components/EditGame'
 import LogReg from './views/LogReg'
-import Profile from './components/UserProfile'
+import UserProfile from './components/UserProfile'
 
 /////////Material UI Links/////////
 import {ThemeProvider, createTheme} from "@mui/material/styles";
@@ -48,11 +48,11 @@ function App() {
         <Router>
           <LogReg path="/" />
           <NotFound default />
-          <AllGames path="/home" />
-          <NewGame path="/new" />
-          <OneGame path="/game/:id" />
-          <EditGame path="/game/edit/:id" />
-          <Profile path="/user/profile/:username" />
+          <AllGames path="/games" />
+          <NewGame path="/games/new" />  
+          <OneGame path="/games/:id" />
+          <EditGame path="/games/:gameId/edit" />
+          <UserProfile path="/user/games/:id" />
         </Router>
       </div>
     </ThemeProvider>
