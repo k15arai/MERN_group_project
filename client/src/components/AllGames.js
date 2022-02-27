@@ -91,7 +91,7 @@ const AllGames = (props) => {
           // >
           //   Create New Game
           // </Button>
-            <Tooltip title='Filter List'>
+            <Tooltip title='Add a new Game'>
             <IconButton type='submit'>
                 <AddBoxIcon
                 fontSize='large'
@@ -131,55 +131,55 @@ const AllGames = (props) => {
             </Tooltip>
         </form>
         </div>
-        {displayGames.map((game, index) => (
-        <div key={index}>
-            <hr />
-            <Grid container>
-            <Grid item xs={5}>
-                <img src={game.pictureUrl} alt={game.description} />
-            </Grid>
-            <Grid item xs={7}>
-                <GameCard game={game} userId={userId} />
-                {userId && game.user_id._id.toString() === userId.toString() ? (
-                <Tooltip title='Edit Game'>
-                    <IconButton>
-                    <EditIcon
-                        color='primary'
-                        onClick={() => navigate(`/games/${game._id}/edit`)}
-                    />
-                    </IconButton>
-                </Tooltip>
-              ) : // <Button
-              //   size='small'
-              //   variant='outlined'
-              //   color='inherit'
-              //   onClick={() => navigate(`/games/${game._id}/edit`)}
-              // >
-              //   Edit Game
-              // </Button>
-                null}
-                {userId && game.user_id._id.toString() === userId.toString() ? (
-                <Tooltip title='Delete Game'>
-                    <IconButton>
-                    <DeleteIcon
-                        color='secondary'
-                        onClick={() => deleteGameHandler(game._id)}
-                    />
-                    </IconButton>
-                </Tooltip>
-              ) : // <Button
-              //   size='small'
-              //   variant='outlined'
-              //   color='inherit'
-              //   onClick={() => deleteGameHandler(game._id)}
-              // >
-              //   Delete Game
-              // </Button>
-                null}
-            </Grid>
-            </Grid>
-        </div>
-        ))}
+            {displayGames.map((game, index) => (
+            <div key={displayGames._id}>
+                <hr />
+                <Grid container>
+                <Grid item xs={5}>
+                    <img src={game.pictureUrl} alt={game.description} />
+                </Grid>
+                <Grid item xs={7}>
+                    <GameCard game={game} userId={userId} />
+                    {userId && game.user_id._id.toString() === userId.toString() ? (
+                    <Tooltip title='Edit Game'>
+                        <IconButton>
+                        <EditIcon
+                            color='primary'
+                            onClick={() => navigate(`/games/${game._id}/edit`)}
+                        />
+                        </IconButton>
+                    </Tooltip>
+                ) : // <Button
+                //   size='small'
+                //   variant='outlined'
+                //   color='inherit'
+                //   onClick={() => navigate(`/games/${game._id}/edit`)}
+                // >
+                //   Edit Game
+                // </Button>
+                    null}
+                    {userId && game.user_id._id.toString() === userId.toString() ? (
+                    <Tooltip title='Delete Game'>
+                        <IconButton>
+                        <DeleteIcon
+                            color='secondary'
+                            onClick={() => deleteGameHandler(game._id)}
+                        />
+                        </IconButton>
+                    </Tooltip>
+                ) : // <Button
+                //   size='small'
+                //   variant='outlined'
+                //   color='inherit'
+                //   onClick={() => deleteGameHandler(game._id)}
+                // >
+                //   Delete Game
+                // </Button>
+                    null}
+                </Grid>
+                </Grid>
+            </div>
+            ))}
     </div>
     );
 };

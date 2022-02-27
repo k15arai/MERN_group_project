@@ -36,9 +36,9 @@ const theme = createTheme({
 
 function App() {
 
-  const NotFound = () => {
-    return <div>Route not Found</div>;
-  };
+  // const NotFound = () => {
+  //   return <div>Route not Found</div>;
+  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -47,7 +47,7 @@ function App() {
         <hr />
         <Router>
           <LogReg path="/" />
-          <NotFound default />
+          {/* <NotFound default /> */}
           <AllGames path="/games" />
           <NewGame path="/games/new" />  
           <OneGame path="/games/:id" />
