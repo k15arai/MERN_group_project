@@ -67,6 +67,7 @@ module.exports = {
       .populate("user_id", "_id firstName email")
       .populate({
         path: "comments",
+        options: { limit: 5, sort: { createdAt: -1 } },
         populate: { path: "user_id" },
       })
       .then((oneGame) => {
