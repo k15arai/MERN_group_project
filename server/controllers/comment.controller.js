@@ -25,9 +25,9 @@ module.exports = {
     let newCommentObject = new Comment(body);
     let gameQuery;
     newCommentObject.game = params.gameId;
-    // const decodedJwt = jwt.decode(req.cookies.usertoken, { complete: true });
-    // newCommentObject.user_id = decodedJwt.payload._id;
-    newCommentObject.user_id = req.jwtpayload.id;
+    const decodedJwt = jwt.decode(req.cookies.usertoken, { complete: true });
+    newCommentObject.user_id = decodedJwt.payload._id;
+    // newCommentObject.user_id = req.jwtpayload.id;
 
     try {
       newCommentObject = await newCommentObject.save();
