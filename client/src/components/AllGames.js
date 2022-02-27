@@ -131,7 +131,7 @@ const AllGames = (props) => {
         </form>
       </div>
       {displayGames.map((game, index) => (
-        <div key={displayGames._id}>
+        <div key={index}>
           <hr />
           <Grid container>
             <Grid item xs={5}>
