@@ -4,7 +4,7 @@ import { navigate } from "@reach/router";
 
 /////////Material UI Links/////////
 import { styled } from "@mui/material/styles";
-import { Typography, Paper, Grid } from "@material-ui/core"; //Button link removed
+import { Typography, Paper, Grid, TextField } from "@material-ui/core"; //Button link removed
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import NotInterestedIcon from "@mui/icons-material/NotInterested";
@@ -225,8 +225,8 @@ const OneGame = (props) => {
                       ADD COMMENT
                     </Typography>
                     <textarea
-                      name=''
-                      id=''
+                      name='commentArea'
+                      id='commentArea'
                       value={commentText}
                       onChange={(e) => setCommentText(e.target.value)}
                       cols='30'
