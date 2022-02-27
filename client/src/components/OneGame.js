@@ -216,7 +216,7 @@ const OneGame = (props) => {
                         </IconButton>
                     </Tooltip>
                     </div>
-                    <form onSubmit={(e) => onSubmitCommentHandler(e, game._id)}>
+                    <form onSubmit={onSubmitCommentHandler}>
                     <hr />
                     {cmtErrs ? (
                         <span className='error-text'>{cmtErrs}</span>
@@ -236,7 +236,7 @@ const OneGame = (props) => {
                         {/* <Button variant='outlined' color='primary' type='submit'>
                         Add Comment
                       </Button> */}
-                        <Tooltip title='Add Like'>
+                        <Tooltip title='Add Comment'>
                             <IconButton type='submit'>
                                 <AddCommentIcon color='red' fontSize='large' />
                             </IconButton>
