@@ -51,7 +51,7 @@ function App() {
           <AllGames path="/games" />
           <NewGame path="/games/new" />  
           <OneGame path="/games/:id" />
-          <EditGame path="/game/edit/:id" />
+          <EditGame path="/games/:gameId/edit" />
           <UserProfile path="/user/games/:id" />
         </Router>
       </div>
