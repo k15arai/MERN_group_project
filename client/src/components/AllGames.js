@@ -17,7 +17,7 @@ const AllGames = (props) => {
   // Array of objects for get all
   const [displayGames, setDisplayGames] = useState([]);
   const [allGames, setAllGames] = useState([]);
-  const [platformFilter, setPlatformFilter] = useState("");
+  const [platformFilter, setPlatformFilter] = useState("All");
   const [userId, setUserId] = useState("");
 
   useEffect(() => {
@@ -141,11 +141,10 @@ const AllGames = (props) => {
               <GameCard game={game} userId={userId} />
               {userId && game.user_id._id.toString() === userId.toString() ? (
                 <Tooltip title='Edit Game'>
-                  <IconButton>
-                    <EditIcon
-                      color='primary'
-                      onClick={() => navigate(`/games/${game._id}/edit`)}
-                    />
+                  <IconButton
+                    onClick={() => navigate(`/games/${game._id}/edit`)}
+                  >
+                    <EditIcon color='primary' />
                   </IconButton>
                 </Tooltip>
               ) : // <Button
@@ -159,11 +158,8 @@ const AllGames = (props) => {
               null}
               {userId && game.user_id._id.toString() === userId.toString() ? (
                 <Tooltip title='Delete Game'>
-                  <IconButton>
-                    <DeleteIcon
-                      color='secondary'
-                      onClick={() => deleteGameHandler(game._id)}
-                    />
+                  <IconButton onClick={() => deleteGameHandler(game._id)}>
+                    <DeleteIcon color='secondary' />
                   </IconButton>
                 </Tooltip>
               ) : // <Button
