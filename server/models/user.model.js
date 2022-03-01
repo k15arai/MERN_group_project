@@ -1,6 +1,30 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
+var emailAlreadyInUse = async function (email) {
+  const user = await this.constructor.findOne({ email });
+  if (user) {
+    if (this.id === user.id) {
+      return true;
+    }
+    return false;
+  }
+  return true;
+};
+
+isProperEmail = function (email) {
+  var myRegxp = /^([\w-\.]+@([\w-]+\.)+[\w-]+)?$/i;
+  return myRegxp.test(email);
+};
+
+var manyValidators = [
+  { validator: isProperEmail, msg: "Please enter a valid email" },
+  {
+    validator: emailAlreadyInUse,
+    msg: "The specified email is already in use",
+  },
+];
+
 const UserSchema = new mongoose.Schema(
   {
     firstName: {
@@ -14,12 +38,14 @@ const UserSchema = new mongoose.Schema(
     email: {
       type: String,
       required: [true, "Email is required"],
-      validate: {
-        // regular expressions (regex) create patterns that we must match
-        // using an anonymous function to run the validation test method
-        validator: (val) => /^([\w-\.]+@([\w-]+\.)+[\w-]+)?$/.test(val),
-        message: "Please enter a valid email",
-      },
+      validate: manyValidators,
+      // unique: true,
+      // validate: {
+      //   // regular expressions (regex) create patterns that we must match
+      //   // using an anonymous function to run the validation test method
+      //   validator: (val) => /^([\w-\.]+@([\w-]+\.)+[\w-]+)?$/.test(val),
+      //   message: "Please enter a valid email",
+      // },
     },
     password: {
       type: String,
