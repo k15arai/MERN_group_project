@@ -16,77 +16,73 @@ import Tooltip from "@mui/material/Tooltip";
 
 ///////////////////////////////////////////////////////////////////////////
 const Header = () => {
-    const [userId, setUserId] = useState("");
-    const [fakeBoolean, setFakeBoolean] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [fakeBoolean, setFakeBoolean] = useState(false);
 
-    useEffect(() => {
+  useEffect(() => {
     setUserId(localStorage.getItem("userId"));
-    }, [userId]);
+  }, [userId]);
 
-    const logout = (e) => {
+  const logout = (e) => {
     e.preventDefault();
 
     axios
-        .post(
+      .post(
         "http://localhost:8000/api/user/logout",
         {
           // no body required for this request
           // would pick up req.body without this empty
         },
         {
-            withCredentials: true,
+          withCredentials: true,
         }
-        )
-        .then((res) => {
+      )
+      .then((res) => {
         console.log(res.data);
         localStorage.removeItem("userId");
         setUserId("");
         setFakeBoolean(!fakeBoolean);
         navigate("/");
-        })
-        .catch((err) => {
+      })
+      .catch((err) => {
         console.log(err);
         navigate("/");
-        });
-    };
-///////////////////////////////////////////////////////////////////////////
+      });
+  };
+  ///////////////////////////////////////////////////////////////////////////
 
-    return (
+  return (
     <div>
-        <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1 }}>
         <AppBar
-            position='static'
-            style={{ backgroundColor: "black", color: "white" }}
+          position='static'
+          style={{ backgroundColor: "black", color: "white" }}
         >
-            <Toolbar>
+          <Toolbar>
             <IconButton
-                size='large'
-                edge='start'
-                color='inherit'
-                aria-label='menu'
-                sx={{ mr: 2 }}
+              size='large'
+              edge='start'
+              color='inherit'
+              aria-label='menu'
+              sx={{ mr: 2 }}
             >
-                <VideogameAssetIcon fontSize='large' />
+              <VideogameAssetIcon fontSize='large' />
             </IconButton>
             <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-                GOOD GAME
+              GOOD GAME
             </Typography>
             <Tooltip title='Login'>
-                <IconButton>
-                <LoginIcon
-                    color='inherit'
-                    fontSize='large'
-                    onClick={() => navigate("/")}
-                />
-                </IconButton>
+              <IconButton onClick={() => navigate("/")}>
+                <LoginIcon color='inherit' fontSize='large' />
+              </IconButton>
             </Tooltip>
             <Button
-                color='inherit'
-                size='small'
-                variant='outlined'
-                onClick={() => navigate("/games")}
+              color='inherit'
+              size='small'
+              variant='outlined'
+              onClick={() => navigate("/games")}
             >
-                See All Games
+              See All Games
             </Button>
             {/* <Button
                 size='small'
@@ -105,15 +101,15 @@ const Header = () => {
                 Logout
             </Button> */}
             <Tooltip title='Logout'>
-                <IconButton>
-                <LogoutIcon color='inherit' fontSize='large' onClick={logout} />
-                </IconButton>
+              <IconButton onClick={logout}>
+                <LogoutIcon color='inherit' fontSize='large' />
+              </IconButton>
             </Tooltip>
-            </Toolbar>
+          </Toolbar>
         </AppBar>
-        </Box>
+      </Box>
     </div>
-    );
+  );
 };
 
 export default Header;
